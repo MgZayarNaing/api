@@ -26,3 +26,11 @@ def categories_create(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+@permission_classes([AllowAny])
+def categories_detail(request, pk):
+    category = get_object_or_404(Categories, pk=pk)
+    serializer = CategoriesSerializer(category)
+    return Response(serializer.data)
