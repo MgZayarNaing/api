@@ -45,3 +45,11 @@ def categories_update(request, pk):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@renderer_classes([JSONRenderer])
+@permission_classes([AllowAny])
+def categories_delete(request, pk):
+    category = get_object_or_404(Categories, pk=pk)
+    category.delete()
+    return Response({"detail": "Category deleted successfully."}, status=status.HTTP_200_OK)
